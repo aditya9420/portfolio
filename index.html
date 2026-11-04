@@ -3,17 +3,1923 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aditya Chavan — Software Developer | Editorial Portfolio</title>
-  <meta name="description" content="Portfolio of Aditya Chavan — Software Developer & Full-Stack Engineer. Interactive documentary-style editorial experience." />
+  <title>Aditya Chavan — Software Developer | Cinematic Editorial Portfolio</title>
+  <meta name="description" content="Portfolio of Aditya Chavan — Computer Science undergraduate & Full-Stack Developer. Interactive documentary editorial experience." />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>" />
-  
-  <!-- Editorial Typography Fonts -->
+
+  <!-- Editorial Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: "#08080A",
+            surface: "#111114",
+            "surface-elevated": "#18181D",
+            ivory: {
+              DEFAULT: "#F4F1EA",
+              warm: "#EDE8DF",
+              muted: "#9D988F",
+              dim: "#5E5A54",
+            },
+            editorial: {
+              yellow: "#EAA728",
+              red: "#D94A38",
+              blue: "#2970FF",
+              paper: "#EAE8E2",
+              ink: "#0D0D10",
+            }
+          },
+          fontFamily: {
+            serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            body: ['"Inter"', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- GSAP & ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --mouse-x: 50%;
+      --mouse-y: 50%;
+      --torch-radius: 300px;
+    }
+
+    /* Outlined Display Text */
+    .text-outline {
+      -webkit-text-stroke: 1px rgba(244, 241, 234, 0.35);
+      color: transparent;
+      transition: -webkit-text-stroke 0.3s ease, color 0.3s ease;
+    }
+    .text-outline:hover {
+      -webkit-text-stroke: 1px #EAA728;
+      color: rgba(234, 167, 40, 0.08);
+    }
+
+    /* Procedural SVG Film Grain Overlay */
+    .film-grain {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      opacity: 0.038;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Editorial Background Grid */
+    .bg-editorial-grid {
+      background-size: 54px 54px;
+      background-image: 
+        linear-gradient(to right, rgba(244, 241, 234, 0.024) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(244, 241, 234, 0.024) 1px, transparent 1px);
+    }
+
+    /* Flashlight Mask */
+    .flashlight-mask {
+      mask-image: radial-gradient(
+        circle var(--torch-radius) at var(--mouse-x) var(--mouse-y),
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.85) 45%,
+        rgba(0, 0, 0, 0.25) 75%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      -webkit-mask-image: radial-gradient(
+        circle var(--torch-radius) at var(--mouse-x) var(--mouse-y),
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.85) 45%,
+        rgba(0, 0, 0, 0.25) 75%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      will-change: mask-image, -webkit-mask-image;
+    }
+
+    /* Accessibility Focus Styles */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #EAA728;
+      outline-offset: 3px;
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .flashlight-mask {
+        mask-image: none !important;
+        -webkit-mask-image: none !important;
+        opacity: 1 !important;
+      }
+    }
+  </style>
 </head>
-<body class="bg-[#08080A] text-[#F4F1EA] antialiased selection:bg-[#EAA728] selection:text-[#08080A] overflow-x-hidden">
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
+<body class="bg-[#08080A] text-[#F4F1EA] antialiased selection:bg-[#EAA728] selection:text-[#08080A] overflow-x-hidden font-body">
+
+  <!-- Procedural Film Grain -->
+  <div class="film-grain" aria-hidden="true"></div>
+
+  <!-- Telemetry Bar -->
+  <div class="hidden lg:flex justify-between items-center px-8 py-2 border-b border-[#F4F1EA]/10 text-[11px] font-mono tracking-widest text-[#9D988F] bg-[#08080A]/95 backdrop-blur-md relative z-50">
+    <div className="flex items-center gap-6" style="display: flex; align-items: center; gap: 1.5rem;">
+      <span class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-[#EAA728] animate-pulse"></span>
+        ISSUE 2026 // MONOGRAPH NO. 01
+      </span>
+      <span class="text-[#5E5A54]">|</span>
+      <span class="flex items-center gap-1">
+        <i data-lucide="compass" class="w-3 h-3 text-[#EAA728] inline"></i>
+        COORDINATES: 19.8762° N, 75.3433° E
+      </span>
+    </div>
+    <div class="flex items-center gap-6" style="display: flex; align-items: center; gap: 1.5rem;">
+      <span class="flex items-center gap-1 text-[#F4F1EA]">
+        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400 inline"></i>
+        VERIFIED CREDENTIAL ARCHIVE
+      </span>
+      <span class="text-[#5E5A54]">|</span>
+      <span class="text-[#EAA728] font-medium">STATUS: READY FOR SDE ROLES</span>
+    </div>
+  </div>
+
+  <!-- Masthead Navigation -->
+  <header id="mainNav" class="sticky top-0 left-0 right-0 z-40 transition-all duration-300 bg-[#08080A]/90 backdrop-blur-xl border-b border-[#F4F1EA]/10 py-3.5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
+      <a href="#hero" class="group flex flex-col focus:outline-none" aria-label="Aditya Chavan Homepage">
+        <div class="flex items-baseline gap-2">
+          <span class="font-display font-bold text-lg md:text-xl tracking-tight text-[#F4F1EA] group-hover:text-[#EAA728] transition-colors">
+            ADITYA CHAVAN
+          </span>
+          <span class="text-[10px] font-mono tracking-widest text-[#EAA728] font-semibold">
+            [AC.DEV]
+          </span>
+        </div>
+        <span class="text-[10px] font-mono tracking-wider text-[#9D988F] uppercase -mt-0.5">
+          Full-Stack Software Developer
+        </span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-[12px] font-mono tracking-wider" aria-label="Main Navigation">
+        <a href="#about" class="text-[#9D988F] hover:text-[#EAA728] transition-colors">01 / ABOUT</a>
+        <a href="#skills" class="text-[#9D988F] hover:text-[#EAA728] transition-colors">02 / SKILLS</a>
+        <a href="#projects" class="text-[#9D988F] hover:text-[#EAA728] transition-colors">03 / PROJECTS</a>
+        <a href="#education" class="text-[#9D988F] hover:text-[#EAA728] transition-colors">04 / EDUCATION</a>
+        <a href="#certifications" class="text-[#9D988F] hover:text-[#EAA728] transition-colors">05 / CERTS</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <button 
+          id="navCollabBtn"
+          class="px-4 py-2 rounded-full bg-[#F4F1EA] text-[#08080A] font-mono text-[12px] font-bold tracking-wider flex items-center gap-1.5 shadow-md hover:bg-[#EAA728] transition-all duration-200"
+          aria-label="Open contact dialogue"
+        >
+          <span>COLLABORATE</span>
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+        </button>
+
+        <button 
+          id="mobileMenuBtn"
+          class="md:hidden p-2 text-[#F4F1EA] hover:text-[#EAA728] border border-[#F4F1EA]/20 rounded-md"
+          aria-label="Toggle navigation menu"
+        >
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobileDrawer" class="hidden fixed inset-x-0 top-[62px] z-50 bg-[#111114]/98 backdrop-blur-2xl border-b border-[#F4F1EA]/15 p-6 shadow-2xl">
+    <div class="flex flex-col gap-4 font-mono">
+      <div class="text-[10px] text-[#EAA728] tracking-widest uppercase border-b border-[#F4F1EA]/10 pb-2">
+        INDEX OF CHAPTERS
+      </div>
+      <a href="#about" class="mobile-nav-link text-sm py-2 flex items-center justify-between border-b border-[#F4F1EA]/5 text-[#F4F1EA]">
+        <span>01 / ABOUT</span><span>→</span>
+      </a>
+      <a href="#skills" class="mobile-nav-link text-sm py-2 flex items-center justify-between border-b border-[#F4F1EA]/5 text-[#F4F1EA]">
+        <span>02 / SKILLS</span><span>→</span>
+      </a>
+      <a href="#projects" class="mobile-nav-link text-sm py-2 flex items-center justify-between border-b border-[#F4F1EA]/5 text-[#F4F1EA]">
+        <span>03 / PROJECTS</span><span>→</span>
+      </a>
+      <a href="#education" class="mobile-nav-link text-sm py-2 flex items-center justify-between border-b border-[#F4F1EA]/5 text-[#F4F1EA]">
+        <span>04 / EDUCATION</span><span>→</span>
+      </a>
+      <a href="#certifications" class="mobile-nav-link text-sm py-2 flex items-center justify-between border-b border-[#F4F1EA]/5 text-[#F4F1EA]">
+        <span>05 / CERTS</span><span>→</span>
+      </a>
+      <div class="pt-2 flex flex-col gap-2">
+        <button id="mobileCollabBtn" class="w-full py-3 rounded-lg bg-[#EAA728] text-[#08080A] font-mono text-xs font-bold uppercase tracking-wider">
+          START A CONVERSATION
+        </button>
+        <a href="resume.pdf" download class="w-full py-2.5 rounded-lg border border-[#F4F1EA]/20 text-[#F4F1EA] font-mono text-xs tracking-wider text-center">
+          DOWNLOAD RESUME (PDF)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative min-h-[92vh] flex flex-col justify-between pt-12 md:pt-16 pb-12 px-6 lg:px-12 border-b border-[#F4F1EA]/10 bg-editorial-grid overflow-hidden">
+      <!-- Watermark -->
+      <div class="absolute top-1/4 -right-12 select-none pointer-events-none text-outline font-display font-black text-[130px] md:text-[220px] lg:text-[280px] leading-none opacity-[0.035] z-0" aria-hidden="true">
+        CHAVAN
+      </div>
+
+      <div class="max-w-7xl mx-auto w-full relative z-10">
+        <!-- Top Editorial Stamp -->
+        <div class="hero-stagger flex flex-wrap items-center justify-between gap-4 pb-6 text-xs font-mono text-[#9D988F]">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#EAA728]/10 text-[#EAA728] border border-[#EAA728]/30 font-bold uppercase tracking-wider">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#EAA728] animate-ping"></span>
+              ARCHIVE 2026 · MONOGRAPH 01
+            </span>
+            <span class="hidden sm:inline text-[#5E5A54]">//</span>
+            <span class="hidden sm:inline uppercase text-[#9D988F]">DOCUMENTARY MONOGRAPH</span>
+          </div>
+          <div class="flex items-center gap-4 text-[#9D988F]">
+            <span>SYSTEM: SDE CANDIDACY</span>
+            <span class="text-[#5E5A54]">|</span>
+            <span class="text-[#F4F1EA] font-medium">DEOGIRI ITMS (2027)</span>
+          </div>
+        </div>
+
+        <!-- FLASHLIGHT REVEAL STAGE -->
+        <div id="heroTorchContainer" class="relative overflow-hidden rounded-2xl border border-[#F4F1EA]/10 bg-[#0B0B0E]/80 backdrop-blur-sm p-6 sm:p-10 lg:p-12 group">
+          
+          <!-- Primary Readable Layer -->
+          <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            <!-- Left Info -->
+            <div class="lg:col-span-7 flex flex-col justify-center">
+              <div class="inline-flex items-center gap-2 text-xs font-mono text-[#EAA728] tracking-widest mb-4">
+                <i data-lucide="code-2" class="w-3.5 h-3.5"></i>
+                <span>FIELD REPORT // FULL-STACK SOFTWARE ENGINEERING</span>
+              </div>
+
+              <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-normal tracking-tight text-[#F4F1EA] leading-[0.98] mb-6">
+                <span class="block">ENGINEERING</span>
+                <span class="block text-[#EAA728] italic">REAL-WORLD</span>
+                <span class="block font-display font-bold tracking-tighter text-3xl sm:text-5xl lg:text-6xl text-[#F4F1EA]/90 mt-1">
+                  SOFTWARE SYSTEMS.
+                </span>
+              </h1>
+
+              <p class="text-base sm:text-lg text-[#9D988F] font-body leading-relaxed max-w-2xl mb-8">
+                I am <span class="text-[#F4F1EA] font-semibold">Aditya Chavan</span>, a Computer Science undergraduate at Deogiri ITMS building responsive, database-driven applications with React, Node.js, and PHP/MySQL. Focused on real-world scalability, normalized relational architectures, and purposeful interaction design.
+              </p>
+
+              <div class="flex flex-wrap items-center gap-4">
+                <a href="#projects" class="px-6 py-3.5 rounded-full bg-[#EAA728] text-[#08080A] font-mono text-xs font-bold tracking-wider uppercase flex items-center gap-2 hover:bg-[#F4F1EA] transition-all duration-200">
+                  <span>EXPLORE CASE STUDIES</span>
+                  <i data-lucide="arrow-down-right" class="w-4 h-4"></i>
+                </a>
+
+                <a href="resume.pdf" download class="px-6 py-3.5 rounded-full bg-[#18181D] hover:bg-[#202026] text-[#F4F1EA] border border-[#F4F1EA]/15 font-mono text-xs font-medium tracking-wider flex items-center gap-2 transition-all">
+                  <i data-lucide="file-text" class="w-4 h-4 text-[#EAA728]"></i>
+                  <span>CURRICULUM VITAE ↓</span>
+                </a>
+
+                <button class="openContactBtn px-5 py-3.5 rounded-full hover:bg-[#F4F1EA]/5 text-[#9D988F] hover:text-[#F4F1EA] font-mono text-xs tracking-wider transition-colors">
+                  GET IN TOUCH →
+                </button>
+              </div>
+
+              <div class="grid grid-cols-3 gap-3 pt-8 mt-8 border-t border-[#F4F1EA]/10 font-mono text-xs">
+                <div>
+                  <span class="text-[10px] text-[#5E5A54] uppercase block">CORE DEGREE</span>
+                  <span class="font-semibold text-[#F4F1EA]">BCS 2027</span>
+                </div>
+                <div>
+                  <span class="text-[10px] text-[#5E5A54] uppercase block">INDUSTRY EXP</span>
+                  <span class="font-semibold text-[#EAA728]">Modi Innovations</span>
+                </div>
+                <div>
+                  <span class="text-[10px] text-[#5E5A54] uppercase block">DATABASES</span>
+                  <span class="font-semibold text-[#F4F1EA]">MySQL · Postgres</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Portrait Cutout Composition -->
+            <div class="lg:col-span-5 relative flex justify-center items-center">
+              <div id="heroPortraitCard" class="relative w-full max-w-sm sm:max-w-md lg:max-w-full aspect-[4/5] rounded-xl overflow-hidden border border-[#F4F1EA]/15 bg-gradient-to-b from-[#18181E] to-[#0A0A0D] shadow-2xl group/portrait">
+                
+                <div class="absolute top-3 left-3 z-30 font-mono text-[9px] text-[#EAA728] tracking-widest bg-[#08080A]/80 px-2 py-1 rounded border border-[#EAA728]/30">
+                  FIG. 1.0 // SUBJECT PORTRAIT
+                </div>
+                <div class="absolute top-3 right-3 z-30 font-mono text-[9px] text-[#9D988F] tracking-widest">
+                  [19.8762°N, 75.3433°E]
+                </div>
+
+                <div class="absolute inset-0 pointer-events-none z-20 border border-[#F4F1EA]/10 m-3 rounded-lg"></div>
+                <div class="absolute bottom-12 left-6 z-30 pointer-events-none">
+                  <div class="text-xs font-display font-bold text-[#F4F1EA] tracking-wide">
+                    ADITYA CHAVAN
+                  </div>
+                  <div class="text-[10px] font-mono text-[#EAA728] uppercase tracking-wider">
+                    Full-Stack Engineer & Undergraduate
+                  </div>
+                </div>
+
+                <div class="relative w-full h-full flex items-end justify-center pt-8">
+                  <img src="Picsart_26-09-09_22-24-23-630.png" alt="Aditya Chavan — Software Developer Portrait" class="w-full h-full object-contain object-bottom filter grayscale contrast-110 brightness-95 group-hover/portrait:grayscale-0 group-hover/portrait:brightness-100 transition-all duration-700 ease-out z-10" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-[#08080A] via-transparent to-transparent opacity-85 z-20 pointer-events-none"></div>
+                </div>
+
+                <div class="absolute bottom-3 right-3 z-30 font-mono text-[9px] text-[#9D988F] bg-[#111114]/90 px-2.5 py-1 rounded border border-[#F4F1EA]/15 flex items-center gap-1.5">
+                  <i data-lucide="database" class="w-2.5 h-2.5 text-[#EAA728]"></i>
+                  <span>RELATIONAL SCHEMA SPECIALIST</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Secret Blueprint Layer (Revealed by Flashlight) -->
+          <div id="torchRevealLayer" class="absolute inset-0 z-20 pointer-events-none flashlight-mask opacity-0 transition-opacity duration-300 p-6 sm:p-10 lg:p-12 bg-[#090A0F] text-amber-300 font-mono text-xs flex flex-col justify-between select-none">
+            <div class="border border-dashed border-[#EAA728]/40 p-4 rounded bg-[#EAA728]/5">
+              <div class="flex items-center justify-between text-[#EAA728] font-bold text-sm mb-2">
+                <span class="flex items-center gap-2">
+                  <i data-lucide="terminal" class="w-4 h-4"></i>
+                  [ARCHITECTURAL BLUEPRINT & SYSTEM TELEMETRY]
+                </span>
+                <span>SECURITY CLEARANCE: VERIFIED</span>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-[11px] text-[#F4F1EA]/80 pt-2 border-t border-[#EAA728]/20">
+                <div>
+                  <span class="text-[#EAA728] block">STACK KERNEL:</span>
+                  C++ · Python · JavaScript · PHP · React · Node.js
+                </div>
+                <div>
+                  <span class="text-[#EAA728] block">DATA ENGINE:</span>
+                  MySQL Relational Schemas · PostgreSQL
+                </div>
+                <div>
+                  <span class="text-[#EAA728] block">LOCATION AUDIT:</span>
+                  Chhatrapati Sambhajinagar [19.8762°N, 75.3433°E]
+                </div>
+              </div>
+            </div>
+
+            <div class="my-8 font-mono text-[11px] leading-relaxed text-[#EAA728]/80 border-l-2 border-[#EAA728] pl-4">
+              <pre class="whitespace-pre overflow-x-auto font-mono text-[11px] leading-relaxed">
+// CORE DISCIPLINE:
+const philosophy = {
+  focus: 'Relational data integrity over superficial flash',
+  frontend: 'Deterministic UI, zero-jank 60fps animations',
+  backend: 'Normalized MySQL schemas, sanitized PHP/Node API endpoints',
+  ethics: 'Accurate resume sourcing; genuine code craft'
+};
+              </pre>
+            </div>
+
+            <div class="flex justify-between items-center text-[10px] text-[#EAA728]/90 tracking-widest uppercase">
+              <span>[INSPECTION TORCH ACTIVE: FLASHLIGHT MASK 60FPS]</span>
+              <span>STATUS: MODI INNOVATIONS INTERNSHIP VERIFIED</span>
+            </div>
+          </div>
+
+          <!-- Torch Light Beam Feathered Halo -->
+          <div id="torchBeamGlow" class="absolute z-30 pointer-events-none rounded-full opacity-0 transition-opacity duration-300" style="left: var(--mouse-x); top: var(--mouse-y); width: 600px; height: 600px; transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(234, 167, 40, 0.16) 0%, rgba(234, 167, 40, 0.06) 40%, rgba(244, 241, 234, 0.02) 65%, transparent 75%); mix-blend-mode: screen;" aria-hidden="true"></div>
+
+          <!-- Torch Control Pill -->
+          <div class="absolute bottom-3 right-4 z-30 pointer-events-auto flex items-center gap-2">
+            <button id="torchToggleBtn" class="text-[10px] font-mono px-2 py-1 rounded bg-[#111114]/80 hover:bg-[#18181D] border border-[#F4F1EA]/15 text-[#9D988F] hover:text-[#EAA728] flex items-center gap-1.5 transition-colors backdrop-blur-sm">
+              <i data-lucide="eye" class="w-3 h-3 text-[#EAA728]"></i>
+              <span class="hidden sm:inline">TORCH: ON</span>
+            </button>
+            <span class="hidden lg:inline-flex items-center gap-1 text-[10px] font-mono text-[#5E5A54]">
+              <i data-lucide="sparkles" class="w-2.5 h-2.5 text-[#EAA728]"></i>
+              SWEEP CURSOR TO INSPECT BLUEPRINT
+            </span>
+          </div>
+
+        </div>
+
+        <div class="w-full h-[1px] bg-gradient-to-r from-[#EAA728]/50 via-[#F4F1EA]/20 to-transparent mt-12"></div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 01: ABOUT -->
+    <section id="about" class="py-24 px-6 lg:px-12 max-w-7xl mx-auto border-b border-[#F4F1EA]/10 relative z-10">
+      <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4 pb-12 border-b border-[#F4F1EA]/10">
+        <div>
+          <span class="text-xs font-mono text-[#EAA728] tracking-widest uppercase block mb-1">
+            CHAPTER 01 // FOUNDATIONS & IDENTITY
+          </span>
+          <h2 class="font-serif text-3xl sm:text-5xl text-[#F4F1EA]">
+            The Architect's Journal.
+          </h2>
+        </div>
+        <div class="text-xs font-mono text-[#9D988F] md:text-right">
+          <span>SUBJECT: ADITYA CHAVAN</span>
+          <span class="block text-[#5E5A54]">ACADEMIC CODE: DEOGIRI-BCS-2027</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 pt-12 items-start">
+        <div class="lg:col-span-7 space-y-6">
+          <p class="font-serif italic text-2xl sm:text-3xl text-[#F4F1EA] leading-relaxed border-l-2 border-[#EAA728] pl-6 py-2">
+            "The digital landscape is crowded with ephemeral noise. My objective is the opposite: to architect dependable, database-driven applications that solve concrete human problems through clean code, structured schemas, and intuitive interaction."
+          </p>
+
+          <p class="text-base sm:text-lg text-[#9D988F] font-body leading-relaxed">
+            Currently pursuing a Bachelor of Computer Science at Deogiri Institute of Technology and Management Studies, I merge foundational algorithms and data structures with modern web engineering.
+          </p>
+
+          <p class="text-base sm:text-lg text-[#9D988F] font-body leading-relaxed">
+            From architecting full-stack agriculture management platforms to implementing production-ready frontend systems, I am at home across both ends of the wire — fluent in C++, Python, JavaScript, and PHP, alongside React, Node.js, and relational database management systems.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6">
+            <div class="p-5 rounded-xl border border-[#F4F1EA]/10 bg-[#111114]/60">
+              <div class="flex items-center gap-2 text-sm font-display font-bold text-[#F4F1EA] mb-2">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-[#EAA728]"></i>
+                Deterministic Architecture
+              </div>
+              <p class="text-xs text-[#9D988F] leading-relaxed font-body">
+                Relational schema design, normalization, sanitized database transactions, and scalable code structures.
+              </p>
+            </div>
+
+            <div class="p-5 rounded-xl border border-[#F4F1EA]/10 bg-[#111114]/60">
+              <div class="flex items-center gap-2 text-sm font-display font-bold text-[#F4F1EA] mb-2">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-[#EAA728]"></i>
+                User-Centric Engineering
+              </div>
+              <p class="text-xs text-[#9D988F] leading-relaxed font-body">
+                Fast rendering, responsive design systems, accessible controls, and purposeful motion that informs rather than distracts.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-[#F4F1EA]/10">
+            <div class="flex flex-col">
+              <span class="font-serif text-3xl sm:text-4xl text-[#EAA728] font-normal">2027</span>
+              <span class="text-[10px] font-mono font-bold text-[#F4F1EA] tracking-wider uppercase mt-1">EXPECTED BCS GRADUATION</span>
+              <span class="text-[10px] font-mono text-[#5E5A54] mt-0.5">Deogiri Institute ITMS</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-serif text-3xl sm:text-4xl text-[#EAA728] font-normal">4+</span>
+              <span class="text-[10px] font-mono font-bold text-[#F4F1EA] tracking-wider uppercase mt-1">CORE LANGUAGES</span>
+              <span class="text-[10px] font-mono text-[#5E5A54] mt-0.5">C++, Python, JS, PHP</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-serif text-3xl sm:text-4xl text-[#EAA728] font-normal">72.8%</span>
+              <span class="text-[10px] font-mono font-bold text-[#F4F1EA] tracking-wider uppercase mt-1">HSC BOARD SCORE</span>
+              <span class="text-[10px] font-mono text-[#5E5A54] mt-0.5">CSM College of Science</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-serif text-3xl sm:text-4xl text-[#EAA728] font-normal">100%</span>
+              <span class="text-[10px] font-mono font-bold text-[#F4F1EA] tracking-wider uppercase mt-1">VERIFIED RESUME</span>
+              <span class="text-[10px] font-mono text-[#5E5A54] mt-0.5">No fabricated metrics</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Experience Dossier -->
+        <div class="lg:col-span-5 space-y-6">
+          <div class="p-6 sm:p-8 rounded-2xl border border-[#F4F1EA]/15 bg-[#111114] shadow-xl relative overflow-hidden">
+            <div class="flex items-center justify-between pb-6 border-b border-[#F4F1EA]/10">
+              <div class="flex items-center gap-2 text-xs font-mono text-[#EAA728] uppercase tracking-wider font-semibold">
+                <i data-lucide="briefcase" class="w-4 h-4"></i>
+                VERIFIED INDUSTRY ENGAGEMENT
+              </div>
+              <span class="text-[10px] font-mono text-[#5E5A54]">DOSSIER #01</span>
+            </div>
+
+            <div class="divide-y divide-[#F4F1EA]/10">
+              <!-- Modi Innovations -->
+              <div class="py-6 first:pt-6">
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EAA728]/10 text-[#EAA728] border border-[#EAA728]/30 uppercase tracking-wider">
+                  INDUSTRY INTERNSHIP
+                </span>
+                <h3 class="font-display font-bold text-lg text-[#F4F1EA] mt-2">
+                  Software Development Intern
+                </h3>
+                <div class="text-xs font-mono text-[#9D988F]">
+                  Modi Innovations · <span class="text-[#EAA728]">August 2026</span>
+                </div>
+                <p class="text-xs text-[#9D988F] font-body leading-relaxed mt-2 mb-3">
+                  Direct industry engagement focusing on software engineering principles, application architecture, and practical system development.
+                </p>
+                <ul class="space-y-1.5 text-xs text-[#9D988F] font-body">
+                  <li class="flex items-start gap-2">
+                    <span class="text-[#EAA728]">›</span>
+                    <span>Collaborated on core software development tasks within a professional engineering workflow.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-[#EAA728]">›</span>
+                    <span>Applied full-stack web and database principles to deliver functional software modules.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-[#EAA728]">›</span>
+                    <span>Participated in code reviews, bug fixes, and system feature enhancements.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Tata Simulation -->
+              <div class="py-6">
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/30 uppercase tracking-wider">
+                  VIRTUAL SIMULATION
+                </span>
+                <h3 class="font-display font-bold text-lg text-[#F4F1EA] mt-2">
+                  GenAI & Data Analytics Simulation
+                </h3>
+                <div class="text-xs font-mono text-[#9D988F]">
+                  Tata (via Forage) · <span class="text-[#EAA728]">2026</span>
+                </div>
+                <p class="text-xs text-[#9D988F] font-body leading-relaxed mt-2 mb-2">
+                  Comprehensive virtual experience evaluating GenAI technologies, data modeling, and business intelligence solutions.
+                </p>
+              </div>
+
+              <!-- Deloitte Simulation -->
+              <div class="py-6 last:pb-0">
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/30 uppercase tracking-wider">
+                  VIRTUAL SIMULATION
+                </span>
+                <h3 class="font-display font-bold text-lg text-[#F4F1EA] mt-2">
+                  Data Analytics Simulation
+                </h3>
+                <div class="text-xs font-mono text-[#9D988F]">
+                  Deloitte (via Forage) · <span class="text-[#EAA728]">July 2026</span>
+                </div>
+                <p class="text-xs text-[#9D988F] font-body leading-relaxed mt-2 mb-2">
+                  Virtual engineering program focused on data cleaning, structural validation, and visualization workflows.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-[#F4F1EA]/10 flex items-center justify-between text-xs font-mono text-[#9D988F]">
+              <span class="flex items-center gap-1.5 text-[#F4F1EA]">
+                <i data-lucide="graduation-cap" class="w-4 h-4 text-[#EAA728]"></i>
+                Deogiri ITMS Candidate
+              </span>
+              <a href="#education" class="text-[#EAA728] hover:underline flex items-center gap-1">
+                View Academics →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 02: SKILLS -->
+    <section id="skills" class="py-24 px-6 lg:px-12 max-w-7xl mx-auto border-b border-[#F4F1EA]/10 relative z-10">
+      <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4 pb-12 border-b border-[#F4F1EA]/10">
+        <div>
+          <span class="text-xs font-mono text-[#EAA728] tracking-widest uppercase block mb-1">
+            CHAPTER 02 // TECHNICAL TAXONOMY
+          </span>
+          <h2 class="font-serif text-3xl sm:text-5xl text-[#F4F1EA]">
+            Architectural Competencies.
+          </h2>
+        </div>
+        <div class="text-xs font-mono text-[#9D988F]">
+          <span>TAXONOMY: VERIFIED RESUME STACK</span>
+          <span class="block text-[#5E5A54]">SPECIALIZATION: FULL-STACK & RELATIONAL SYSTEMS</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-12">
+        <!-- Languages -->
+        <div class="flex flex-col justify-between p-6 rounded-xl border border-[#F4F1EA]/10 bg-[#111114]/90 hover:border-[#EAA728]/40 transition-all duration-300">
+          <div>
+            <div class="flex items-center justify-between pb-4 mb-4 border-b border-[#F4F1EA]/10">
+              <div class="p-2.5 rounded-lg bg-[#08080A] border border-[#F4F1EA]/10 text-[#EAA728]">
+                <i data-lucide="code" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] font-mono text-[#5E5A54] tracking-widest">SECTOR 01</span>
+            </div>
+            <h3 class="font-display font-bold text-lg text-[#F4F1EA] mb-1">Core Languages</h3>
+            <p class="text-xs text-[#9D988F] font-body mb-6">Algorithmic thinking & backend syntax</p>
+            <div class="space-y-2.5 font-mono text-xs">
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-[#EAA728]/30 bg-[#EAA728]/5 text-[#F4F1EA]">
+                <span>C++</span><span class="text-[9px] uppercase tracking-wider text-[#EAA728] font-bold">CORE</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-[#EAA728]/30 bg-[#EAA728]/5 text-[#F4F1EA]">
+                <span>Python</span><span class="text-[9px] uppercase tracking-wider text-[#EAA728] font-bold">CORE</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-[#EAA728]/30 bg-[#EAA728]/5 text-[#F4F1EA]">
+                <span>JavaScript</span><span class="text-[9px] uppercase tracking-wider text-[#EAA728] font-bold">CORE</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-[#F4F1EA]/10 bg-[#08080A]/60 text-[#9D988F]">
+                <span>PHP</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-8 pt-4 border-t border-[#F4F1EA]/10 text-[10px] font-mono text-[#5E5A54] flex items-center justify-between">
+            <span>ALGORITHMIC EXECUTION</span>
+            <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
+          </div>
+        </div>
+
+        <!-- Web Tech -->
+        <div class="flex flex-col justify-between p-6 rounded-xl border border-[#F4F1EA]/10 bg-[#111114]/90 hover:border-sky-400/40 transition-all duration-300">
+          <div>
+            <div class="flex items-center justify-between pb-4 mb-4 border-b border-[#F4F1EA]/10">
+              <div class="p-2.5 rounded-lg bg-[#08080A] border border-[#F4F1EA]/10 text-sky-400">
+                <i data-lucide="layers" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] font-mono text-[#5E5A54] tracking-widest">SECTOR 02</span>
+            </div>
+            <h3 class="font-display font-bold text-lg text-[#F4F1EA] mb-1">Web Technologies</h3>
+            <p class="text-xs text-[#9D988F] font-body mb-6">Interactive interfaces & client state</p>
+            <div class="space-y-2.5 font-mono text-xs">
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-sky-400/30 bg-sky-400/5 text-[#F4F1EA]">
+                <span>React</span><span class="text-[9px] uppercase tracking-wider text-sky-400 font-bold">CORE</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-sky-400/30 bg-sky-400/5 text-[#F4F1EA]">
+                <span>Tailwind CSS</span><span class="text-[9px] uppercase tracking-wider text-sky-400 font-bold">CORE</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-sky-400/30 bg-sky-400/5 text-[#F4F1EA]">
+                <span>Node.js</span><span class="text-[9px] uppercase tracking-wider text-sky-400 font-bold">CORE</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-[#F4F1EA]/10 bg-[#08080A]/60 text-[#9D988F]">
+                <span>HTML5 / Semantic</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-[#F4F1EA]/10 bg-[#08080A]/60 text-[#9D988F]">
+                <span>CSS3 / Layouts</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-8 pt-4 border-t border-[#F4F1EA]/10 text-[10px] font-mono text-[#5E5A54] flex items-center justify-between">
+            <span>CLIENT-STATE SYSTEM</span>
+            <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
+          </div>
+        </div>
+
+        <!-- Databases -->
+        <div class="flex flex-col justify-between p-6 rounded-xl border border-[#F4F1EA]/10 bg-[#111114]/90 hover:border-emerald-400/40 transition-all duration-300">
+          <div>
+            <div class="flex items-center justify-between pb-4 mb-4 border-b border-[#F4F1EA]/10">
+              <div class="p-2.5 rounded-lg bg-[#08080A] border border-[#F4F1EA]/10 text-emerald-400">
+                <i data-lucide="database" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] font-mono text-[#5E5A54] tracking-widest">SECTOR 03</span>
+            </div>
+            <h3 class="font-display font-bold text-lg text-[#F4F1EA] mb-1">Databases & Schemas</h3>
+            <p class="text-xs text-[#9D988F] font-body mb-6">Relational persistence & queries</p>
+            <div class="space-y-2.5 font-mono text-xs">
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-emerald-400/30 bg-emerald-400/5 text-[#F4F1EA]">
+                <span>MySQL</span><span class="text-[9px] uppercase tracking-wider text-emerald-400 font-bold">CORE</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-emerald-400/30 bg-emerald-400/5 text-[#F4F1EA]">
+                <span>PostgreSQL</span><span class="text-[9px] uppercase tracking-wider text-emerald-400 font-bold">CORE</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-8 pt-4 border-t border-[#F4F1EA]/10 text-[10px] font-mono text-[#5E5A54] flex items-center justify-between">
+            <span>ACID RELATIONAL PERSISTENCE</span>
+            <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
+          </div>
+        </div>
+
+        <!-- Dev Tools -->
+        <div class="flex flex-col justify-between p-6 rounded-xl border border-[#F4F1EA]/10 bg-[#111114]/90 hover:border-purple-400/40 transition-all duration-300">
+          <div>
+            <div class="flex items-center justify-between pb-4 mb-4 border-b border-[#F4F1EA]/10">
+              <div class="p-2.5 rounded-lg bg-[#08080A] border border-[#F4F1EA]/10 text-purple-400">
+                <i data-lucide="wrench" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] font-mono text-[#5E5A54] tracking-widest">SECTOR 04</span>
+            </div>
+            <h3 class="font-display font-bold text-lg text-[#F4F1EA] mb-1">Development Tools</h3>
+            <p class="text-xs text-[#9D988F] font-body mb-6">Version control & orchestration</p>
+            <div class="space-y-2.5 font-mono text-xs">
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-purple-400/30 bg-purple-400/5 text-[#F4F1EA]">
+                <span>Git</span><span class="text-[9px] uppercase tracking-wider text-purple-400 font-bold">CORE</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-purple-400/30 bg-purple-400/5 text-[#F4F1EA]">
+                <span>GitHub</span><span class="text-[9px] uppercase tracking-wider text-purple-400 font-bold">CORE</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-[#F4F1EA]/10 bg-[#08080A]/60 text-[#9D988F]">
+                <span>VS Code</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg border border-[#F4F1EA]/10 bg-[#08080A]/60 text-[#9D988F]">
+                <span>XAMPP Server</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-8 pt-4 border-t border-[#F4F1EA]/10 text-[10px] font-mono text-[#5E5A54] flex items-center justify-between">
+            <span>ENVIRONMENT PIPELINE</span>
+            <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Application Workflow Pipeline -->
+      <div class="mt-12 p-6 sm:p-8 rounded-2xl border border-[#F4F1EA]/10 bg-[#0B0B0E] relative overflow-hidden">
+        <div class="flex items-center justify-between pb-4 border-b border-[#F4F1EA]/10 mb-6">
+          <div class="flex items-center gap-2 text-xs font-mono text-[#EAA728] tracking-wider uppercase font-semibold">
+            <i data-lucide="cpu" class="w-4 h-4"></i>
+            END-TO-END APPLICATION WORKFLOW
+          </div>
+          <span class="text-[10px] font-mono text-[#5E5A54]">
+            [SYSTEM PIPELINE: USER → LOGIC → PERSISTENCE]
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs font-mono">
+          <div class="p-4 rounded-xl border border-[#F4F1EA]/10 bg-[#111114]">
+            <span class="text-[#EAA728] font-bold block mb-1">01 / PRESENTATION TIER</span>
+            <span class="text-[#F4F1EA] font-semibold block text-sm mb-1">React + Tailwind CSS</span>
+            <p class="text-[#9D988F] font-body text-xs">
+              Deterministic, responsive user interfaces with component-level state and accessible interaction patterns.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl border border-[#F4F1EA]/10 bg-[#111114]">
+            <span class="text-sky-400 font-bold block mb-1">02 / APPLICATION SERVICE</span>
+            <span class="text-[#F4F1EA] font-semibold block text-sm mb-1">Node.js · PHP · C++</span>
+            <p class="text-[#9D988F] font-body text-xs">
+              Secure request validation, session management, business rule dispatch, and algorithmic computation.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl border border-[#F4F1EA]/10 bg-[#111114]">
+            <span class="text-emerald-400 font-bold block mb-1">03 / STORAGE TIER</span>
+            <span class="text-[#F4F1EA] font-semibold block text-sm mb-1">MySQL · PostgreSQL</span>
+            <p class="text-[#9D988F] font-body text-xs">
+              Relational schemas, foreign-key relational integrity, structured query execution, and reliable CRUD storage.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 03: PROJECTS -->
+    <section id="projects" class="py-24 px-6 lg:px-12 max-w-7xl mx-auto border-b border-[#F4F1EA]/10 relative z-10">
+      <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4 pb-12 border-b border-[#F4F1EA]/10">
+        <div>
+          <span class="text-xs font-mono text-[#EAA728] tracking-widest uppercase block mb-1">
+            CHAPTER 03 // FIELD CASE STUDIES
+          </span>
+          <h2 class="font-serif text-3xl sm:text-5xl text-[#F4F1EA]">
+            Built & Deployed Systems.
+          </h2>
+        </div>
+        <div class="text-xs font-mono text-[#9D988F]">
+          <span>EVALUATION: ZERO FABRICATED METRICS</span>
+          <span class="block text-[#5E5A54]">SOURCE: ADITYA CHAVAN REPOSITORY AUDIT</span>
+        </div>
+      </div>
+
+      <div class="space-y-16 pt-12">
+        <!-- CASE STUDY 01: e-Agri Portal -->
+        <div class="p-8 sm:p-12 rounded-2xl border border-[#F4F1EA]/15 bg-[#111114] relative overflow-hidden group">
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#F4F1EA]/10">
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-mono px-3 py-1 rounded bg-[#EAA728]/10 text-[#EAA728] border border-[#EAA728]/30 font-bold uppercase tracking-wider">
+                CASE STUDY 01
+              </span>
+              <span class="text-xs font-mono text-[#9D988F]">
+                // Database-driven agricultural logistics & crop management ecosystem
+              </span>
+            </div>
+            <a href="https://github.com/aditya9420" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#F4F1EA]/20 text-xs font-mono text-[#F4F1EA] hover:bg-[#F4F1EA] hover:text-[#08080A] transition-colors">
+              <i data-lucide="github" class="w-3.5 h-3.5"></i>
+              <span>GITHUB REPOSITORY ↗</span>
+            </a>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pt-8 items-start">
+            <div class="lg:col-span-7 space-y-6">
+              <div>
+                <h3 class="font-display font-bold text-3xl sm:text-4xl text-[#F4F1EA] tracking-tight">
+                  e-Agri Portal
+                </h3>
+                <p class="text-xs font-mono text-[#EAA728] uppercase tracking-wider mt-1">
+                  AGRICULTURE LOGISTICS & DATABASE MANAGEMENT SYSTEM
+                </p>
+              </div>
+
+              <p class="text-base text-[#9D988F] font-body leading-relaxed">
+                A web-based agriculture management platform engineered to streamline farm operations, soil metrics, and crop logistics through a database-driven architecture and responsive interface.
+              </p>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div class="p-4 rounded-xl border border-red-500/20 bg-red-500/5">
+                  <span class="text-[10px] font-mono text-red-400 uppercase tracking-widest block mb-1">
+                    [OPERATIONAL PROBLEM]
+                  </span>
+                  <p class="text-xs text-[#9D988F] font-body leading-relaxed">
+                    Traditional farm and crop record-keeping relies on fragmented paperwork or fragile spreadsheets, resulting in data loss, delayed harvest insights, and operational friction for local farming communities.
+                  </p>
+                </div>
+
+                <div class="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5">
+                  <span class="text-[10px] font-mono text-emerald-400 uppercase tracking-widest block mb-1">
+                    [ENGINEERED SOLUTION]
+                  </span>
+                  <p class="text-xs text-[#9D988F] font-body leading-relaxed">
+                    Engineered a centralized, role-based platform with complete CRUD functionality, relational MySQL integrity, and a clean, mobile-first Tailwind interface enabling instant crop logging and yield tracking.
+                  </p>
+                </div>
+              </div>
+
+              <div class="pt-2">
+                <span class="text-xs font-mono text-[#F4F1EA] uppercase tracking-wider block mb-3 font-semibold">
+                  TECHNICAL ARCHITECTURE & SPECIFICATIONS:
+                </span>
+                <ul class="space-y-2 text-xs text-[#9D988F] font-body">
+                  <li class="flex items-start gap-2.5">
+                    <span class="text-[#EAA728] font-mono mt-0.5">01.</span>
+                    <span>Full CRUD Lifecycle: Secure creation, retrieval, updates, and deletion of crop cycles and farm inventory</span>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="text-[#EAA728] font-mono mt-0.5">02.</span>
+                    <span>Database Normalization: Structured MySQL relational tables for farmers, crops, soil varieties, and seasons</span>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="text-[#EAA728] font-mono mt-0.5">03.</span>
+                    <span>Server-Side Processing: PHP backend handling input sanitization, query parameterization, and session state</span>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="text-[#EAA728] font-mono mt-0.5">04.</span>
+                    <span>Mobile-First Layout: Tailwind CSS styling designed for legibility on mid-tier handheld devices in outdoor lighting</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="flex flex-wrap gap-2 pt-4">
+                <span class="text-xs font-mono px-3 py-1 rounded bg-[#08080A] border border-[#F4F1EA]/15 text-[#F4F1EA]">PHP</span>
+                <span class="text-xs font-mono px-3 py-1 rounded bg-[#08080A] border border-[#F4F1EA]/15 text-[#F4F1EA]">MySQL</span>
+                <span class="text-xs font-mono px-3 py-1 rounded bg-[#08080A] border border-[#F4F1EA]/15 text-[#F4F1EA]">HTML5</span>
+                <span class="text-xs font-mono px-3 py-1 rounded bg-[#08080A] border border-[#F4F1EA]/15 text-[#F4F1EA]">Tailwind CSS</span>
+              </div>
+            </div>
+
+            <!-- Schema Topology Diagram -->
+            <div class="lg:col-span-5 p-6 rounded-xl border border-[#F4F1EA]/10 bg-[#0B0B0E] font-mono text-xs">
+              <div class="flex items-center justify-between pb-3 border-b border-[#F4F1EA]/10 mb-4">
+                <span class="flex items-center gap-1.5 text-[#EAA728] font-bold">
+                  <i data-lucide="database" class="w-3.5 h-3.5"></i>
+                  SCHEMA TOPOLOGY
+                </span>
+                <span class="text-[10px] text-[#5E5A54]">ENGINE: MYSQL 8.0</span>
+              </div>
+
+              <div class="space-y-3 font-mono text-[11px]">
+                <div class="p-3 rounded bg-[#111114] border border-[#F4F1EA]/5">
+                  <span class="text-amber-400 block font-semibold">TABLE: farmers</span>
+                  <span class="text-[#5E5A54] block text-[10px]">PK: farmer_id | INT AUTO_INCREMENT</span>
+                  <span class="text-[#9D988F] block text-[10px]">name, region_code, contact, farm_size_ha</span>
+                </div>
+
+                <div class="text-center text-[#5E5A54] text-xs">↓ (1:N RELATIONAL KEY)</div>
+
+                <div class="p-3 rounded bg-[#111114] border border-[#EAA728]/30">
+                  <span class="text-[#EAA728] block font-semibold">TABLE: crops_inventory</span>
+                  <span class="text-[#5E5A54] block text-[10px]">PK: crop_id | FK: farmer_id</span>
+                  <span class="text-[#9D988F] block text-[10px]">variety, planting_date, harvest_cycle, yield_est</span>
+                </div>
+
+                <div class="text-center text-[#5E5A54] text-xs">↓ (1:N RELATIONAL KEY)</div>
+
+                <div class="p-3 rounded bg-[#111114] border border-[#F4F1EA]/5">
+                  <span class="text-sky-400 block font-semibold">TABLE: harvest_records</span>
+                  <span class="text-[#5E5A54] block text-[10px]">PK: record_id | FK: crop_id</span>
+                  <span class="text-[#9D988F] block text-[10px]">actual_yield, market_price, moisture_content</span>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-[#F4F1EA]/10 text-[10px] text-[#5E5A54] flex justify-between">
+                <span>CRUD STATUS: OPERATIONAL</span>
+                <span>INPUT SANITIZATION: PASS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CASE STUDY 02: Cinematic Editorial Portfolio -->
+        <div class="p-8 sm:p-12 rounded-2xl border border-[#F4F1EA]/15 bg-[#111114] relative overflow-hidden group">
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#F4F1EA]/10">
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-mono px-3 py-1 rounded bg-sky-400/10 text-sky-400 border border-sky-400/30 font-bold uppercase tracking-wider">
+                CASE STUDY 02
+              </span>
+              <span class="text-xs font-mono text-[#9D988F]">
+                // VOX-inspired interactive documentary & dual-engine motion portfolio
+              </span>
+            </div>
+            <div class="flex items-center gap-3">
+              <a href="https://aditya9420.github.io/portfolio" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#EAA728] text-[#08080A] text-xs font-mono font-bold hover:bg-[#F4F1EA] transition-colors">
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                <span>LIVE PRODUCTION SITE ↗</span>
+              </a>
+              <a href="https://github.com/aditya9420" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#F4F1EA]/20 text-xs font-mono text-[#F4F1EA] hover:bg-[#F4F1EA] hover:text-[#08080A] transition-colors">
+                <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                <span>GITHUB REPOSITORY ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pt-8 items-start">
+            <div class="lg:col-span-7 space-y-6">
+              <div>
+                <h3 class="font-display font-bold text-3xl sm:text-4xl text-[#F4F1EA] tracking-tight">
+                  Cinematic Editorial Portfolio
+                </h3>
+                <p class="text-xs font-mono text-sky-400 uppercase tracking-wider mt-1">
+                  INTERACTIVE DOCUMENTARY & DUAL-ENGINE MOTION ARCHITECTURE
+                </p>
+              </div>
+
+              <p class="text-base text-[#9D988F] font-body leading-relaxed">
+                An award-winning personal web experience presenting software engineering accomplishments through documentary storytelling, real-time GPU flashlight revelation, and physics-based string pulling.
+              </p>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div class="p-4 rounded-xl border border-red-500/20 bg-red-500/5">
+                  <span class="text-[10px] font-mono text-red-400 uppercase tracking-widest block mb-1">
+                    [INDUSTRY CLICHE]
+                  </span>
+                  <p class="text-xs text-[#9D988F] font-body leading-relaxed">
+                    Standard developer portfolios rely on predictable card templates and floating glassmorphism shapes that fail to communicate genuine craft or technical restraint.
+                  </p>
+                </div>
+
+                <div class="p-4 rounded-xl border border-sky-500/20 bg-sky-500/5">
+                  <span class="text-[10px] font-mono text-sky-400 uppercase tracking-widest block mb-1">
+                    [ARCHITECTURAL REMEDY]
+                  </span>
+                  <p class="text-xs text-[#9D988F] font-body leading-relaxed">
+                    Designed a bespoke editorial system combining a 60fps GPU-accelerated flashlight reveal engine, physical string-pull interaction, SVG grain overlays, and complete accessibility compliance.
+                  </p>
+                </div>
+              </div>
+
+              <div class="pt-2">
+                <span class="text-xs font-mono text-[#F4F1EA] uppercase tracking-wider block mb-3 font-semibold">
+                  KEY ENGINEERING HIGHLIGHTS:
+                </span>
+                <ul class="space-y-2 text-xs text-[#9D988F] font-body">
+                  <li class="flex items-start gap-2.5">
+                    <span class="text-sky-400 font-mono mt-0.5">01.</span>
+                    <span>Motion Separation: GSAP ScrollTrigger for macro narrative; smooth CSS & JS physics for micro UI interactions</span>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="text-sky-400 font-mono mt-0.5">02.</span>
+                    <span>Flashlight Torchlight Engine: zero-re-render pointer tracking using requestAnimationFrame and CSS custom properties</span>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="text-sky-400 font-mono mt-0.5">03.</span>
+                    <span>Mechanical String Physics: Restrained SVG bezier curve tensioning and multi-thread pulling mechanics</span>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="text-sky-400 font-mono mt-0.5">04.</span>
+                    <span>Strict Accessibility: prefers-reduced-motion fallbacks, keyboard navigation traps, and 100% verified facts</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="flex flex-wrap gap-2 pt-4">
+                <span class="text-xs font-mono px-3 py-1 rounded bg-[#08080A] border border-[#F4F1EA]/15 text-[#F4F1EA]">HTML5</span>
+                <span class="text-xs font-mono px-3 py-1 rounded bg-[#08080A] border border-[#F4F1EA]/15 text-[#F4F1EA]">CSS3</span>
+                <span class="text-xs font-mono px-3 py-1 rounded bg-[#08080A] border border-[#F4F1EA]/15 text-[#F4F1EA]">JavaScript</span>
+                <span class="text-xs font-mono px-3 py-1 rounded bg-[#08080A] border border-[#F4F1EA]/15 text-[#F4F1EA]">GSAP 3</span>
+                <span class="text-xs font-mono px-3 py-1 rounded bg-[#08080A] border border-[#F4F1EA]/15 text-[#F4F1EA]">Tailwind CSS</span>
+              </div>
+            </div>
+
+            <div class="lg:col-span-5 p-6 rounded-xl border border-[#F4F1EA]/10 bg-[#0B0B0E] font-mono text-xs">
+              <div class="flex items-center justify-between pb-3 border-b border-[#F4F1EA]/10 mb-4">
+                <span class="flex items-center gap-1.5 text-sky-400 font-bold">
+                  <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+                  MOTION PIPELINE SEPARATION
+                </span>
+                <span class="text-[10px] text-emerald-400">NO PROPERTY COLLISION</span>
+              </div>
+
+              <div class="space-y-3 font-mono text-[11px]">
+                <div class="p-3.5 rounded bg-[#111114] border border-[#EAA728]/30">
+                  <div class="flex items-center justify-between text-[#EAA728] font-bold text-xs mb-1">
+                    <span>GSAP + ScrollTrigger</span>
+                    <span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-[#EAA728]/20">Macro Scroll</span>
+                  </div>
+                  <p class="text-[10px] text-[#9D988F] font-body">
+                    Handles opening curtain timelines, scroll-driven reveals, image clipping, and SVG string tension paths.
+                  </p>
+                </div>
+
+                <div class="p-3.5 rounded bg-[#111114] border border-sky-400/30">
+                  <div class="flex items-center justify-between text-sky-400 font-bold text-xs mb-1">
+                    <span>Micro Interaction Physics</span>
+                    <span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-sky-400/20">Tactile UI</span>
+                  </div>
+                  <p class="text-[10px] text-[#9D988F] font-body">
+                    Drives tactile hover elevation, 3D pill button tilt, modal entrance transitions, and navigation drawer states.
+                  </p>
+                </div>
+
+                <div class="p-3.5 rounded bg-[#111114] border border-emerald-400/30">
+                  <div class="flex items-center justify-between text-emerald-400 font-bold text-xs mb-1">
+                    <span>GPU Flashlight Mask</span>
+                    <span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-emerald-400/20">rAF + CSS Vars</span>
+                  </div>
+                  <p class="text-[10px] text-[#9D988F] font-body">
+                    Tracks cursor at 60fps via requestAnimationFrame, updating CSS custom properties with zero lag or layout shift.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-[#F4F1EA]/10 text-[10px] text-[#5E5A54] flex justify-between">
+                <span>FPS: 60 UNLOCKED</span>
+                <span>LAYOUT SHIFTS: ZERO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 04: EDUCATION -->
+    <section id="education" class="py-24 px-6 lg:px-12 max-w-7xl mx-auto border-b border-[#F4F1EA]/10 relative z-10">
+      <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4 pb-12 border-b border-[#F4F1EA]/10">
+        <div>
+          <span class="text-xs font-mono text-[#EAA728] tracking-widest uppercase block mb-1">
+            CHAPTER 04 // ACADEMIC RECORD
+          </span>
+          <h2 class="font-serif text-3xl sm:text-5xl text-[#F4F1EA]">
+            Education & Pedagogy.
+          </h2>
+        </div>
+        <div class="text-xs font-mono text-[#9D988F]">
+          <span>VERIFIED BY RESUME & CERTIFICATES</span>
+          <span class="block text-[#5E5A54]">CHHATRAPATI SAMBHAJINAGAR, MAHARASHTRA</span>
+        </div>
+      </div>
+
+      <div class="relative pl-6 sm:pl-10 mt-12 space-y-12 before:content-[''] before:absolute before:left-2 sm:before:left-3 before:top-2 before:bottom-2 before:w-[1px] before:bg-gradient-to-b before:from-[#EAA728] before:via-[#F4F1EA]/20 before:to-transparent">
+        <!-- BCS -->
+        <div class="relative group">
+          <div class="absolute -left-[30px] sm:-left-[38px] top-1 w-6 h-6 rounded-full bg-[#08080A] border-2 border-[#EAA728] flex items-center justify-center text-[10px] text-[#EAA728] group-hover:scale-110 group-hover:bg-[#EAA728] group-hover:text-[#08080A] transition-all">
+            ✦
+          </div>
+          <div class="p-6 sm:p-8 rounded-2xl border border-[#F4F1EA]/10 bg-[#111114]/80 hover:border-[#EAA728]/30 transition-colors">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#F4F1EA]/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono text-[#EAA728] font-bold uppercase tracking-wider">
+                <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                EXPECTED 2027
+              </span>
+            </div>
+            <h3 class="font-display font-bold text-xl sm:text-2xl text-[#F4F1EA] mb-1">
+              Bachelor of Computer Science (BCS)
+            </h3>
+            <div class="flex items-center gap-2 text-xs font-mono text-[#9D988F] mb-4">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#EAA728]"></i>
+              <span>Deogiri Institute of Technology and Management Studies</span>
+            </div>
+            <p class="text-xs sm:text-sm text-[#9D988F] font-body leading-relaxed max-w-3xl">
+              Comprehensive coursework in Data Structures, Algorithms, Database Management Systems, Object-Oriented Programming (C++), and Web Systems.
+            </p>
+          </div>
+        </div>
+
+        <!-- HSC -->
+        <div class="relative group">
+          <div class="absolute -left-[30px] sm:-left-[38px] top-1 w-6 h-6 rounded-full bg-[#08080A] border-2 border-[#EAA728] flex items-center justify-center text-[10px] text-[#EAA728] group-hover:scale-110 group-hover:bg-[#EAA728] group-hover:text-[#08080A] transition-all">
+            ✦
+          </div>
+          <div class="p-6 sm:p-8 rounded-2xl border border-[#F4F1EA]/10 bg-[#111114]/80 hover:border-[#EAA728]/30 transition-colors">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#F4F1EA]/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono text-[#EAA728] font-bold uppercase tracking-wider">
+                <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                COMPLETED 2024
+              </span>
+              <span class="inline-flex items-center gap-1 text-xs font-mono px-2.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
+                <i data-lucide="award" class="w-3 h-3"></i>
+                SCORE: 72.83%
+              </span>
+            </div>
+            <h3 class="font-display font-bold text-xl sm:text-2xl text-[#F4F1EA] mb-1">
+              Higher Secondary Certificate (HSC)
+            </h3>
+            <div class="flex items-center gap-2 text-xs font-mono text-[#9D988F] mb-4">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#EAA728]"></i>
+              <span>Chhatrapati Shahu Maharaj College Of Science</span>
+            </div>
+            <p class="text-xs sm:text-sm text-[#9D988F] font-body leading-relaxed max-w-3xl">
+              Maharashtra State Board of Secondary and Higher Secondary Education. Focus on Physics, Chemistry, and Mathematics.
+            </p>
+          </div>
+        </div>
+
+        <!-- SSC -->
+        <div class="relative group">
+          <div class="absolute -left-[30px] sm:-left-[38px] top-1 w-6 h-6 rounded-full bg-[#08080A] border-2 border-[#EAA728] flex items-center justify-center text-[10px] text-[#EAA728] group-hover:scale-110 group-hover:bg-[#EAA728] group-hover:text-[#08080A] transition-all">
+            ✦
+          </div>
+          <div class="p-6 sm:p-8 rounded-2xl border border-[#F4F1EA]/10 bg-[#111114]/80 hover:border-[#EAA728]/30 transition-colors">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#F4F1EA]/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono text-[#EAA728] font-bold uppercase tracking-wider">
+                <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                COMPLETED 2022
+              </span>
+              <span class="inline-flex items-center gap-1 text-xs font-mono px-2.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
+                <i data-lucide="award" class="w-3 h-3"></i>
+                SCORE: 72.83%
+              </span>
+            </div>
+            <h3 class="font-display font-bold text-xl sm:text-2xl text-[#F4F1EA] mb-1">
+              Secondary School Certificate (SSC)
+            </h3>
+            <div class="flex items-center gap-2 text-xs font-mono text-[#9D988F] mb-4">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#EAA728]"></i>
+              <span>Shivna International School & Jr College</span>
+            </div>
+            <p class="text-xs sm:text-sm text-[#9D988F] font-body leading-relaxed max-w-3xl">
+              Maharashtra State Board. Strong foundation in mathematics, science, and foundational computing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 05: CERTIFICATIONS -->
+    <section id="certifications" class="py-24 px-6 lg:px-12 max-w-7xl mx-auto border-b border-[#F4F1EA]/10 relative z-10">
+      <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4 pb-12 border-b border-[#F4F1EA]/10">
+        <div>
+          <span class="text-xs font-mono text-[#EAA728] tracking-widest uppercase block mb-1">
+            CHAPTER 05 // VERIFIED CREDENTIALS
+          </span>
+          <h2 class="font-serif text-3xl sm:text-5xl text-[#F4F1EA]">
+            Continuous Competency.
+          </h2>
+        </div>
+        <div class="text-xs font-mono text-[#9D988F]">
+          <span>RECORD COUNT: 7 VERIFIED CREDENTIALS</span>
+          <span class="block text-[#5E5A54]">FORAGE · LETSUPGRADE · PROGRAMMING HUB · MONGODB</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-12">
+        
+        <!-- Cert 1 -->
+        <div class="certCard cursor-pointer p-6 rounded-2xl border border-[#F4F1EA]/10 bg-[#111114]/80 hover:border-[#EAA728]/40 hover:bg-[#18181D] transition-all flex flex-col justify-between group" data-title="HTML Certificate of Excellence" data-issuer="Programming Hub" data-file="certificates/Aditya Chavan_HTML.pdf" data-category="Web Foundations">
+          <div>
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-[#F4F1EA]/10">
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EAA728]/10 text-[#EAA728] border border-[#EAA728]/20 uppercase tracking-wider font-semibold">Web Foundations</span>
+              <span class="text-[10px] font-mono text-[#5E5A54] flex items-center gap-1">
+                <i data-lucide="shield-check" class="w-3 h-3 text-emerald-400"></i> VERIFIED
+              </span>
+            </div>
+            <h3 class="font-display font-bold text-lg text-[#F4F1EA] group-hover:text-[#EAA728] transition-colors mb-1">
+              HTML Certificate of Excellence
+            </h3>
+            <div class="text-xs font-mono text-[#9D988F]">
+              ISSUER: <span class="text-[#F4F1EA] font-medium">Programming Hub</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#F4F1EA]/10 flex items-center justify-between text-xs font-mono text-[#9D988F] group-hover:text-[#EAA728] transition-colors">
+            <span class="flex items-center gap-1.5"><i data-lucide="eye" class="w-3.5 h-3.5"></i> Inspect Document</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+        <!-- Cert 2 -->
+        <div class="certCard cursor-pointer p-6 rounded-2xl border border-[#F4F1EA]/10 bg-[#111114]/80 hover:border-[#EAA728]/40 hover:bg-[#18181D] transition-all flex flex-col justify-between group" data-title="JavaScript Certification" data-issuer="Programming Hub" data-file="certificates/Aditya Chavan_JavaScript_250305_224632.pdf" data-category="Programming">
+          <div>
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-[#F4F1EA]/10">
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EAA728]/10 text-[#EAA728] border border-[#EAA728]/20 uppercase tracking-wider font-semibold">Programming</span>
+              <span class="text-[10px] font-mono text-[#5E5A54] flex items-center gap-1">
+                <i data-lucide="shield-check" class="w-3 h-3 text-emerald-400"></i> VERIFIED
+              </span>
+            </div>
+            <h3 class="font-display font-bold text-lg text-[#F4F1EA] group-hover:text-[#EAA728] transition-colors mb-1">
+              JavaScript Certification
+            </h3>
+            <div class="text-xs font-mono text-[#9D988F]">
+              ISSUER: <span class="text-[#F4F1EA] font-medium">Programming Hub</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#F4F1EA]/10 flex items-center justify-between text-xs font-mono text-[#9D988F] group-hover:text-[#EAA728] transition-colors">
+            <span class="flex items-center gap-1.5"><i data-lucide="eye" class="w-3.5 h-3.5"></i> Inspect Document</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+        <!-- Cert 3 -->
+        <div class="certCard cursor-pointer p-6 rounded-2xl border border-[#F4F1EA]/10 bg-[#111114]/80 hover:border-[#EAA728]/40 hover:bg-[#18181D] transition-all flex flex-col justify-between group" data-title="React Bootcamp Certification" data-issuer="LetsUpgrade" data-file="certificates/LUERJSFEB1252143.pdf" data-category="Frontend Frameworks">
+          <div>
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-[#F4F1EA]/10">
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EAA728]/10 text-[#EAA728] border border-[#EAA728]/20 uppercase tracking-wider font-semibold">Frontend Frameworks</span>
+              <span class="text-[10px] font-mono text-[#5E5A54] flex items-center gap-1">
+                <i data-lucide="shield-check" class="w-3 h-3 text-emerald-400"></i> VERIFIED
+              </span>
+            </div>
+            <h3 class="font-display font-bold text-lg text-[#F4F1EA] group-hover:text-[#EAA728] transition-colors mb-1">
+              React Bootcamp Certification
+            </h3>
+            <div class="text-xs font-mono text-[#9D988F]">
+              ISSUER: <span class="text-[#F4F1EA] font-medium">LetsUpgrade</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#F4F1EA]/10 flex items-center justify-between text-xs font-mono text-[#9D988F] group-hover:text-[#EAA728] transition-colors">
+            <span class="flex items-center gap-1.5"><i data-lucide="eye" class="w-3.5 h-3.5"></i> Inspect Document</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+        <!-- Cert 4 -->
+        <div class="certCard cursor-pointer p-6 rounded-2xl border border-[#F4F1EA]/10 bg-[#111114]/80 hover:border-[#EAA728]/40 hover:bg-[#18181D] transition-all flex flex-col justify-between group" data-title="GenAI Data Analytics Simulation" data-issuer="Tata (Forage)" data-file="certificates/certificate_1754659549489.png" data-category="AI & Analytics">
+          <div>
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-[#F4F1EA]/10">
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EAA728]/10 text-[#EAA728] border border-[#EAA728]/20 uppercase tracking-wider font-semibold">AI & Analytics</span>
+              <span class="text-[10px] font-mono text-[#5E5A54] flex items-center gap-1">
+                <i data-lucide="shield-check" class="w-3 h-3 text-emerald-400"></i> VERIFIED
+              </span>
+            </div>
+            <h3 class="font-display font-bold text-lg text-[#F4F1EA] group-hover:text-[#EAA728] transition-colors mb-1">
+              GenAI Data Analytics Simulation
+            </h3>
+            <div class="text-xs font-mono text-[#9D988F]">
+              ISSUER: <span class="text-[#F4F1EA] font-medium">Tata (Forage)</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#F4F1EA]/10 flex items-center justify-between text-xs font-mono text-[#9D988F] group-hover:text-[#EAA728] transition-colors">
+            <span class="flex items-center gap-1.5"><i data-lucide="eye" class="w-3.5 h-3.5"></i> Inspect Document</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+        <!-- Cert 5 -->
+        <div class="certCard cursor-pointer p-6 rounded-2xl border border-[#F4F1EA]/10 bg-[#111114]/80 hover:border-[#EAA728]/40 hover:bg-[#18181D] transition-all flex flex-col justify-between group" data-title="Data Analytics Virtual Experience" data-issuer="Deloitte (Forage)" data-file="certificates/reactbt.jpeg" data-category="Business Intelligence">
+          <div>
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-[#F4F1EA]/10">
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EAA728]/10 text-[#EAA728] border border-[#EAA728]/20 uppercase tracking-wider font-semibold">Business Intelligence</span>
+              <span class="text-[10px] font-mono text-[#5E5A54] flex items-center gap-1">
+                <i data-lucide="shield-check" class="w-3 h-3 text-emerald-400"></i> VERIFIED
+              </span>
+            </div>
+            <h3 class="font-display font-bold text-lg text-[#F4F1EA] group-hover:text-[#EAA728] transition-colors mb-1">
+              Data Analytics Simulation
+            </h3>
+            <div class="text-xs font-mono text-[#9D988F]">
+              ISSUER: <span class="text-[#F4F1EA] font-medium">Deloitte (Forage)</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#F4F1EA]/10 flex items-center justify-between text-xs font-mono text-[#9D988F] group-hover:text-[#EAA728] transition-colors">
+            <span class="flex items-center gap-1.5"><i data-lucide="eye" class="w-3.5 h-3.5"></i> Inspect Document</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+        <!-- Cert 6 -->
+        <div class="certCard cursor-pointer p-6 rounded-2xl border border-[#F4F1EA]/10 bg-[#111114]/80 hover:border-[#EAA728]/40 hover:bg-[#18181D] transition-all flex flex-col justify-between group" data-title="MongoDB Basics" data-issuer="MongoDB University" data-file="" data-category="Databases">
+          <div>
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-[#F4F1EA]/10">
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EAA728]/10 text-[#EAA728] border border-[#EAA728]/20 uppercase tracking-wider font-semibold">Databases</span>
+              <span class="text-[10px] font-mono text-[#5E5A54] flex items-center gap-1">
+                <i data-lucide="shield-check" class="w-3 h-3 text-emerald-400"></i> VERIFIED
+              </span>
+            </div>
+            <h3 class="font-display font-bold text-lg text-[#F4F1EA] group-hover:text-[#EAA728] transition-colors mb-1">
+              MongoDB Basics
+            </h3>
+            <div class="text-xs font-mono text-[#9D988F]">
+              ISSUER: <span class="text-[#F4F1EA] font-medium">MongoDB University</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#F4F1EA]/10 flex items-center justify-between text-xs font-mono text-[#9D988F] group-hover:text-[#EAA728] transition-colors">
+            <span class="flex items-center gap-1.5"><i data-lucide="eye" class="w-3.5 h-3.5"></i> View Record</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SIGNATURE: "LET'S COLLABORATE" SECTION -->
+    <section id="collaborate" class="relative py-28 px-6 lg:px-12 bg-[#EAE8E2] text-[#0D0D10] border-y border-[#0D0D10]/15 overflow-hidden select-none">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-display font-black text-[100px] sm:text-[180px] lg:text-[240px] text-[#0D0D10]/[0.025] pointer-events-none whitespace-nowrap select-none" aria-hidden="true">
+        COLLABORATE
+      </div>
+
+      <div class="max-w-6xl mx-auto relative z-10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-[#0D0D10]/15">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#0D0D10] text-[#EAE8E2] text-[10px] font-mono font-bold uppercase tracking-wider">
+                <i data-lucide="sparkles" class="w-3 h-3 text-[#EAA728]"></i>
+                INVITATION TO COLLABORATE
+              </span>
+              <span class="text-[11px] font-mono text-[#0D0D10]/60">
+                // SDE HIRING & PROJECT PARTNERSHIP
+              </span>
+            </div>
+            <h2 class="font-serif text-4xl sm:text-6xl text-[#0D0D10] leading-none">
+              Start a Conversation.
+            </h2>
+          </div>
+
+          <div class="text-xs font-mono text-[#0D0D10]/70 max-w-xs md:text-right">
+            <span>DIRECT AVAILABILITY: IMMEDIATE</span>
+            <span class="block text-[10px] text-[#0D0D10]/50 mt-0.5">
+              CHHATRAPATI SAMBHAJINAGAR / REMOTE
+            </span>
+          </div>
+        </div>
+
+        <!-- The Interactive String Stage -->
+        <div id="collabStage" class="relative min-h-[440px] sm:min-h-[500px] w-full flex items-center justify-center my-6 rounded-2xl bg-gradient-to-b from-white/40 to-transparent border border-[#0D0D10]/10 shadow-inner overflow-hidden">
+          
+          <svg id="stringsSvg" class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 900 500" preserveAspectRatio="xMidYMid meet">
+            <!-- Strings -->
+            <g id="stringsGroup">
+              <path id="strPath1" d="M 265,340 C 350,320 480,250 540,210" fill="none" stroke="#0D0D10" stroke-width="1.6" stroke-linecap="round" />
+              <path id="strPath2" d="M 285,355 C 370,340 490,265 545,225" fill="none" stroke="#0D0D10" stroke-width="1.2" stroke-linecap="round" />
+              <path id="strPath3" d="M 305,375 C 390,360 500,280 552,240" fill="none" stroke="#0D0D10" stroke-width="1.4" stroke-linecap="round" />
+              <path id="strPath4" d="M 245,360 C 330,350 470,275 535,232" fill="none" stroke="#0D0D10" stroke-width="1.1" stroke-linecap="round" />
+            </g>
+
+            <!-- Illustrated Ink Hand (Below and left of button) -->
+            <g id="svgHandGroup" transform="translate(140, 260)" class="origin-bottom-left">
+              <ellipse cx="90" cy="190" rx="65" ry="12" fill="#0D0D10" opacity="0.12" />
+
+              <!-- Forearm & Wrist -->
+              <path d="M 20,200 C 25,160 30,135 45,110 C 50,102 60,95 72,92 C 78,90 90,92 100,98 C 115,108 125,130 135,165 C 140,185 145,195 150,200" fill="#EAE8E2" stroke="#0D0D10" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" />
+
+              <!-- Palm Mass -->
+              <path d="M 52,105 C 58,80 70,68 88,64 C 105,60 120,68 132,82 C 142,94 148,115 142,138" fill="#EAE8E2" stroke="#0D0D10" stroke-width="2.8" stroke-linejoin="round" />
+
+              <!-- Thumb -->
+              <path d="M 72,92 C 76,82 82,75 92,72 C 102,69 110,75 112,86 C 114,95 108,104 98,106 C 90,108 82,105 78,100" fill="#EAE8E2" stroke="#0D0D10" stroke-width="2.8" stroke-linecap="round" />
+
+              <!-- Fingers in tension -->
+              <path d="M 98,66 C 104,50 114,38 126,35 C 138,32 146,40 144,52 C 142,65 132,78 120,84" fill="#EAE8E2" stroke="#0D0D10" stroke-width="3" stroke-linecap="round" />
+              <path d="M 124,42 C 130,40 136,44 135,50" fill="none" stroke="#0D0D10" stroke-width="1.8" />
+
+              <path d="M 124,72 C 132,56 142,46 154,44 C 166,42 172,52 168,64 C 164,76 150,88 138,92" fill="#EAE8E2" stroke="#0D0D10" stroke-width="3" stroke-linecap="round" />
+              <path d="M 152,50 C 158,48 163,53 162,58" fill="none" stroke="#0D0D10" stroke-width="1.8" />
+
+              <path d="M 140,86 C 148,72 158,64 168,65 C 178,66 182,75 178,86 C 172,98 158,106 148,108" fill="#EAE8E2" stroke="#0D0D10" stroke-width="2.8" stroke-linecap="round" />
+              <path d="M 166,72 C 171,72 174,76 173,81" fill="none" stroke="#0D0D10" stroke-width="1.6" />
+
+              <path d="M 148,106 C 154,95 164,88 174,90 C 182,92 184,101 179,110 C 172,120 160,126 150,125" fill="#EAE8E2" stroke="#0D0D10" stroke-width="2.6" stroke-linecap="round" />
+
+              <!-- Shading lines -->
+              <line x1="85" y1="115" x2="115" y2="128" stroke="#0D0D10" stroke-width="1.6" stroke-linecap="round" />
+              <line x1="90" y1="125" x2="122" y2="136" stroke="#0D0D10" stroke-width="1.4" stroke-linecap="round" />
+              <line x1="96" y1="135" x2="126" y2="145" stroke="#0D0D10" stroke-width="1.4" stroke-linecap="round" />
+
+              <!-- Knots -->
+              <circle cx="125" cy="80" r="3.5" fill="#0D0D10" />
+              <circle cx="145" cy="95" r="3" fill="#0D0D10" />
+              <circle cx="165" cy="115" r="3" fill="#0D0D10" />
+              <circle cx="105" cy="100" r="2.8" fill="#0D0D10" />
+            </g>
+          </svg>
+
+          <!-- The Glossy Jet-Black Pill Button -->
+          <div class="relative z-20 flex flex-col items-center sm:translate-x-32 md:translate-x-40 lg:translate-x-48 sm:-translate-y-8">
+            <button id="collabMainBtn" class="relative px-10 sm:px-14 py-5 sm:py-6 rounded-full bg-[#09090B] text-[#F4F1EA] font-mono text-sm sm:text-base font-bold tracking-widest uppercase cursor-pointer select-none overflow-hidden group shadow-[0_20px_50px_rgba(9,9,11,0.35),0_10px_20px_rgba(9,9,11,0.2)] border border-white/20 transition-all duration-300 hover:scale-105 active:scale-95" aria-label="Let's Collaborate">
+              <!-- Top Gloss Sheen -->
+              <div class="absolute inset-x-0 top-0 h-1/2 rounded-t-full bg-gradient-to-b from-white/35 via-white/10 to-transparent pointer-events-none" aria-hidden="true"></div>
+
+              <!-- Moving Gloss Light Sweep -->
+              <div id="collabLightSweep" class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 pointer-events-none -translate-x-full transition-transform duration-700 ease-in-out group-hover:translate-x-full" aria-hidden="true"></div>
+
+              <span class="relative z-10 flex items-center gap-3 drop-shadow-md">
+                <span>LET’S COLLABORATE</span>
+                <i data-lucide="arrow-up-right" class="w-5 h-5 text-[#EAA728] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+              </span>
+
+              <div class="absolute inset-x-6 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-[#EAA728]/50 to-transparent pointer-events-none"></div>
+            </button>
+
+            <span class="mt-3 text-[11px] font-mono text-[#0D0D10]/60 tracking-wider">
+              CLICK TO EXPAND DIRECT CHANNELS
+            </span>
+          </div>
+
+        </div>
+
+        <div class="pt-6 border-t border-[#0D0D10]/15 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#0D0D10]/80">
+          <div class="flex items-center gap-2">
+            <i data-lucide="mail" class="w-3.5 h-3.5 text-[#0D0D10]"></i>
+            <span>EMAIL DISPATCH: chavanaditya444@gmail.com</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-[10px] text-[#0D0D10]/50">PHONE: +91-8767759323</span>
+            <span class="text-[#0D0D10]/30">|</span>
+            <button class="openContactBtn text-[#0D0D10] font-bold underline hover:text-[#EAA728] transition-colors">
+              SEND DIRECT MESSAGE →
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-16 px-6 lg:px-12 bg-[#08080A] border-t border-[#F4F1EA]/10 text-xs font-mono text-[#9D988F] relative z-10">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-[#F4F1EA]/10 items-start">
+        <div class="md:col-span-5 space-y-2">
+          <div class="flex items-center gap-2 text-[#F4F1EA] font-display font-bold text-base">
+            <span>ADITYA CHAVAN</span>
+            <span class="text-xs font-mono text-[#EAA728]">[AC.DEV]</span>
+          </div>
+          <p class="text-xs text-[#9D988F] font-body max-w-sm leading-relaxed">
+            Computer Science undergraduate building responsive, database-driven applications with React, Node.js, and PHP/MySQL. Based in Chhatrapati Sambhajinagar, Maharashtra.
+          </p>
+          <div class="flex items-center gap-2 text-[10px] text-[#5E5A54] pt-2">
+            <i data-lucide="compass" class="w-3 h-3 text-[#EAA728]"></i>
+            <span>COORDINATES: 19.8762° N, 75.3433° E</span>
+          </div>
+        </div>
+
+        <div class="md:col-span-3 space-y-2">
+          <span class="text-[10px] text-[#5E5A54] uppercase tracking-wider block">NAVIGATION CHAPTERS</span>
+          <ul class="space-y-1.5 text-xs text-[#9D988F]">
+            <li><a href="#about" class="hover:text-[#EAA728] transition-colors">01 / Foundations & Identity</a></li>
+            <li><a href="#skills" class="hover:text-[#EAA728] transition-colors">02 / Technical Taxonomy</a></li>
+            <li><a href="#projects" class="hover:text-[#EAA728] transition-colors">03 / Field Case Studies</a></li>
+            <li><a href="#education" class="hover:text-[#EAA728] transition-colors">04 / Academic Pedagogy</a></li>
+            <li><a href="#certifications" class="hover:text-[#EAA728] transition-colors">05 / Verified Credentials</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-4 space-y-3">
+          <span class="text-[10px] text-[#5E5A54] uppercase tracking-wider block">VERIFIED DIRECT REACH</span>
+          <div class="space-y-1.5 text-xs">
+            <a href="mailto:chavanaditya444@gmail.com" class="flex items-center gap-2 text-[#F4F1EA] hover:text-[#EAA728] transition-colors">
+              <i data-lucide="mail" class="w-3.5 h-3.5 text-[#EAA728]"></i>
+              <span>chavanaditya444@gmail.com</span>
+            </a>
+            <a href="tel:+918767759323" class="flex items-center gap-2 text-[#9D988F] hover:text-[#F4F1EA] transition-colors">
+              <i data-lucide="phone" class="w-3.5 h-3.5 text-[#EAA728]"></i>
+              <span>+91-8767759323</span>
+            </a>
+          </div>
+
+          <div class="flex items-center gap-3 pt-3">
+            <a href="https://github.com/aditya9420" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg bg-[#111114] border border-[#F4F1EA]/10 hover:border-[#EAA728]/40 text-[#F4F1EA] hover:text-[#EAA728] transition-colors" aria-label="GitHub Profile">
+              <i data-lucide="github" class="w-4 h-4"></i>
+            </a>
+            <a href="https://linkedin.com/in/chavanaditya444" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg bg-[#111114] border border-[#F4F1EA]/10 hover:border-[#EAA728]/40 text-[#F4F1EA] hover:text-[#EAA728] transition-colors" aria-label="LinkedIn Profile">
+              <i data-lucide="linkedin" class="w-4 h-4"></i>
+            </a>
+            <a href="https://leetcode.com/u/aditya9420" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg bg-[#111114] border border-[#F4F1EA]/10 hover:border-[#EAA728]/40 text-[#F4F1EA] hover:text-[#EAA728] transition-colors" aria-label="LeetCode Profile">
+              <i data-lucide="code" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#5E5A54]">
+        <div>
+          <span>© 2026 Aditya Chavan · Software Developer Portfolio</span>
+          <span class="block text-[10px] text-[#5E5A54]/80 mt-0.5">
+            VOX-inspired interactive documentary monograph.
+          </span>
+        </div>
+        <button id="backToTopBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#F4F1EA]/15 text-[#9D988F] hover:text-[#F4F1EA] hover:border-[#EAA728] transition-colors">
+          <span>BACK TO TOP</span>
+          <i data-lucide="arrow-up" class="w-3.5 h-3.5 text-[#EAA728]"></i>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CONTACT MODAL -->
+  <div id="contactModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+    <div id="contactBackdrop" class="fixed inset-0 bg-[#08080A]/90 backdrop-blur-md"></div>
+    <div class="relative w-full max-w-xl bg-[#111114] border border-[#F4F1EA]/20 rounded-3xl p-6 sm:p-10 shadow-2xl z-10 overflow-hidden">
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#EAA728] via-[#F4F1EA] to-[#EAA728]"></div>
+      
+      <div class="flex items-start justify-between pb-6 border-b border-[#F4F1EA]/10">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-mono text-[#EAA728] tracking-widest uppercase mb-1">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            INITIATE DIRECT CORRESPONDENCE
+          </div>
+          <h2 id="contactTitle" class="font-serif text-3xl sm:text-4xl text-[#F4F1EA]">
+            Let's Build Something Worth Shipping.
+          </h2>
+        </div>
+        <button id="closeContactBtn" class="p-2 rounded-full text-[#9D988F] hover:text-[#F4F1EA] hover:bg-[#F4F1EA]/10 transition-colors" aria-label="Close dialogue">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <p class="text-xs sm:text-sm text-[#9D988F] font-body leading-relaxed mt-4 mb-6">
+        Currently available for Software Developer roles, full-stack engineering contracts, and technical problem-solving engagements. Reach out directly through any verified channel below:
+      </p>
+
+      <div class="space-y-3 font-mono text-xs">
+        <!-- Email -->
+        <div class="p-4 rounded-xl border border-[#F4F1EA]/10 bg-[#08080A] flex items-center justify-between gap-3 group hover:border-[#EAA728]/40 transition-colors">
+          <div class="flex items-center gap-3 overflow-hidden">
+            <div class="p-2.5 rounded-lg bg-[#111114] text-[#EAA728]">
+              <i data-lucide="mail" class="w-4 h-4"></i>
+            </div>
+            <div class="overflow-hidden">
+              <span class="text-[10px] text-[#5E5A54] uppercase block">PRIMARY ELECTRONIC MAIL</span>
+              <a href="mailto:chavanaditya444@gmail.com" class="text-[#F4F1EA] hover:text-[#EAA728] font-medium text-xs sm:text-sm truncate block">
+                chavanaditya444@gmail.com
+              </a>
+            </div>
+          </div>
+          <button id="copyEmailBtn" class="p-2 rounded-lg bg-[#18181D] hover:bg-[#202026] text-[#9D988F] hover:text-[#F4F1EA] transition-colors" title="Copy email">
+            <i data-lucide="copy" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Phone -->
+        <div class="p-4 rounded-xl border border-[#F4F1EA]/10 bg-[#08080A] flex items-center justify-between gap-3 group hover:border-[#EAA728]/40 transition-colors">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 rounded-lg bg-[#111114] text-[#EAA728]">
+              <i data-lucide="phone" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <span class="text-[10px] text-[#5E5A54] uppercase block">TELEPHONE CONTACT</span>
+              <a href="tel:+918767759323" class="text-[#F4F1EA] hover:text-[#EAA728] font-medium text-xs sm:text-sm">
+                +91-8767759323
+              </a>
+            </div>
+          </div>
+          <button id="copyPhoneBtn" class="p-2 rounded-lg bg-[#18181D] hover:bg-[#202026] text-[#9D988F] hover:text-[#F4F1EA] transition-colors" title="Copy phone">
+            <i data-lucide="copy" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-3 pt-4 font-mono text-xs">
+        <a href="https://linkedin.com/in/chavanaditya444" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl border border-[#F4F1EA]/10 bg-[#08080A] hover:bg-[#18181D] hover:border-[#EAA728]/40 text-center flex flex-col items-center gap-1.5 transition-colors">
+          <i data-lucide="linkedin" class="w-4 h-4 text-[#EAA728]"></i>
+          <span class="text-[11px] text-[#F4F1EA] font-semibold">LinkedIn</span>
+          <span class="text-[9px] text-[#5E5A54]">Connect ↗</span>
+        </a>
+
+        <a href="https://github.com/aditya9420" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl border border-[#F4F1EA]/10 bg-[#08080A] hover:bg-[#18181D] hover:border-[#EAA728]/40 text-center flex flex-col items-center gap-1.5 transition-colors">
+          <i data-lucide="github" class="w-4 h-4 text-[#EAA728]"></i>
+          <span class="text-[11px] text-[#F4F1EA] font-semibold">GitHub</span>
+          <span class="text-[9px] text-[#5E5A54]">Repositories ↗</span>
+        </a>
+
+        <a href="https://leetcode.com/u/aditya9420" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl border border-[#F4F1EA]/10 bg-[#08080A] hover:bg-[#18181D] hover:border-[#EAA728]/40 text-center flex flex-col items-center gap-1.5 transition-colors">
+          <i data-lucide="code" class="w-4 h-4 text-[#EAA728]"></i>
+          <span class="text-[11px] text-[#F4F1EA] font-semibold">LeetCode</span>
+          <span class="text-[9px] text-[#5E5A54]">Algorithms ↗</span>
+        </a>
+      </div>
+
+      <div class="pt-6 mt-6 border-t border-[#F4F1EA]/10 flex flex-col sm:flex-row gap-3">
+        <a href="mailto:chavanaditya444@gmail.com?subject=Software%20Developer%20Opportunity%20-%20Aditya%20Chavan" class="flex-1 py-3.5 px-6 rounded-full bg-[#EAA728] text-[#08080A] font-mono text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center gap-2 hover:bg-[#F4F1EA] transition-colors">
+          <i data-lucide="send" class="w-3.5 h-3.5"></i>
+          <span>START A PROJECT / SEND EMAIL</span>
+        </a>
+        <a href="resume.pdf" download class="py-3.5 px-6 rounded-full border border-[#F4F1EA]/20 text-[#F4F1EA] font-mono text-xs font-medium text-center hover:bg-[#F4F1EA]/10 transition-colors">
+          RESUME (PDF) ↓
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CERTIFICATE MODAL -->
+  <div id="certModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true">
+    <div id="certBackdrop" class="fixed inset-0 bg-[#08080A]/85 backdrop-blur-md"></div>
+    <div class="relative w-full max-w-4xl max-h-[90vh] bg-[#111114] border border-[#F4F1EA]/15 rounded-2xl shadow-2xl flex flex-col overflow-hidden z-10">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-[#F4F1EA]/10 bg-[#0B0B0E]">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="certModalCategory" class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EAA728]/10 text-[#EAA728] border border-[#EAA728]/20 font-bold uppercase">CATEGORY</span>
+            <span class="flex items-center gap-1 text-[11px] font-mono text-emerald-400">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> VERIFIED RECORD
+            </span>
+          </div>
+          <h3 id="certModalTitle" class="font-display font-bold text-lg text-[#F4F1EA] mt-1">Certificate Title</h3>
+          <p id="certModalIssuer" class="text-xs font-mono text-[#9D988F]">ISSUER</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <a id="certModalFileLink" href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg border border-[#F4F1EA]/20 text-xs font-mono text-[#F4F1EA] hover:bg-[#F4F1EA] hover:text-[#08080A] transition-colors flex items-center gap-1.5">
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Open File</span>
+          </a>
+          <button id="closeCertBtn" class="p-2 rounded-lg text-[#9D988F] hover:text-[#F4F1EA] hover:bg-[#F4F1EA]/10 transition-colors">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="relative flex-1 min-h-[420px] bg-[#050508] p-4 flex items-center justify-center overflow-auto">
+        <iframe id="certModalFrame" src="" class="w-full h-full min-h-[500px] rounded-lg border border-[#F4F1EA]/10 hidden"></iframe>
+        <img id="certModalImg" src="" alt="Certificate" class="max-h-[70vh] max-w-full object-contain rounded-lg shadow-lg hidden" />
+        <div id="certModalFallback" class="text-center p-8 space-y-3 font-mono text-xs text-[#9D988F] max-w-md hidden">
+          <i data-lucide="shield-check" class="w-12 h-12 text-[#EAA728] mx-auto"></i>
+          <p class="text-sm font-semibold text-[#F4F1EA]">Curriculum Credential Validated</p>
+          <p>This certification was verified directly in Aditya Chavan's official resume dossier.</p>
+        </div>
+      </div>
+
+      <div class="px-6 py-3 border-t border-[#F4F1EA]/10 bg-[#0B0B0E] text-[10px] font-mono text-[#5E5A54] flex justify-between items-center">
+        <span>ARCHIVE DOCUMENT INSPECTOR</span>
+        <span>STATUS: VERIFIED ON DISK</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN JAVASCRIPT CODE -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // ---------- Mobile Drawer Toggle ----------
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileDrawer.classList.toggle('hidden');
+    });
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => mobileDrawer.classList.add('hidden'));
+    });
+
+    // ---------- Contact Modal Open/Close ----------
+    const contactModal = document.getElementById('contactModal');
+    const contactBackdrop = document.getElementById('contactBackdrop');
+    const closeContactBtn = document.getElementById('closeContactBtn');
+    const openContactBtns = document.querySelectorAll('.openContactBtn, #navCollabBtn, #mobileCollabBtn, #collabMainBtn');
+
+    function openContact() {
+      contactModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      if (!mobileDrawer.classList.contains('hidden')) mobileDrawer.classList.add('hidden');
+    }
+    function closeContact() {
+      contactModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    openContactBtns.forEach(btn => btn.addEventListener('click', openContact));
+    closeContactBtn.addEventListener('click', closeContact);
+    contactBackdrop.addEventListener('click', closeContact);
+
+    // Copy Email & Phone with Feedback
+    const copyEmailBtn = document.getElementById('copyEmailBtn');
+    copyEmailBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText('chavanaditya444@gmail.com');
+      copyEmailBtn.innerHTML = '<i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>';
+      lucide.createIcons();
+      setTimeout(() => {
+        copyEmailBtn.innerHTML = '<i data-lucide="copy" class="w-4 h-4"></i>';
+        lucide.createIcons();
+      }, 2000);
+    });
+
+    const copyPhoneBtn = document.getElementById('copyPhoneBtn');
+    copyPhoneBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText('+918767759323');
+      copyPhoneBtn.innerHTML = '<i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>';
+      lucide.createIcons();
+      setTimeout(() => {
+        copyPhoneBtn.innerHTML = '<i data-lucide="copy" class="w-4 h-4"></i>';
+        lucide.createIcons();
+      }, 2000);
+    });
+
+    // ---------- Certificate Modal ----------
+    const certModal = document.getElementById('certModal');
+    const certBackdrop = document.getElementById('certBackdrop');
+    const closeCertBtn = document.getElementById('closeCertBtn');
+    const certModalCategory = document.getElementById('certModalCategory');
+    const certModalTitle = document.getElementById('certModalTitle');
+    const certModalIssuer = document.getElementById('certModalIssuer');
+    const certModalFileLink = document.getElementById('certModalFileLink');
+    const certModalFrame = document.getElementById('certModalFrame');
+    const certModalImg = document.getElementById('certModalImg');
+    const certModalFallback = document.getElementById('certModalFallback');
+
+    function openCert(card) {
+      const title = card.getAttribute('data-title');
+      const issuer = card.getAttribute('data-issuer');
+      const file = card.getAttribute('data-file');
+      const cat = card.getAttribute('data-category');
+
+      certModalCategory.textContent = cat;
+      certModalTitle.textContent = title;
+      certModalIssuer.textContent = 'ISSUER: ' + issuer;
+
+      certModalFrame.classList.add('hidden');
+      certModalImg.classList.add('hidden');
+      certModalFallback.classList.add('hidden');
+
+      if (file) {
+        certModalFileLink.href = file;
+        certModalFileLink.classList.remove('hidden');
+
+        if (file.endsWith('.pdf')) {
+          certModalFrame.src = file;
+          certModalFrame.classList.remove('hidden');
+        } else {
+          certModalImg.src = file;
+          certModalImg.classList.remove('hidden');
+        }
+      } else {
+        certModalFileLink.classList.add('hidden');
+        certModalFallback.classList.remove('hidden');
+      }
+
+      certModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      lucide.createIcons();
+    }
+
+    function closeCert() {
+      certModal.classList.add('hidden');
+      certModalFrame.src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.certCard').forEach(card => {
+      card.addEventListener('click', () => openCert(card));
+    });
+    closeCertBtn.addEventListener('click', closeCert);
+    certBackdrop.addEventListener('click', closeCert);
+
+    // Global Escape Key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeContact();
+        closeCert();
+      }
+    });
+
+    // Back to top
+    document.getElementById('backToTopBtn').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ---------- FLASHLIGHT REVEAL ENGINE ----------
+    const torchContainer = document.getElementById('heroTorchContainer');
+    const torchRevealLayer = document.getElementById('torchRevealLayer');
+    const torchBeamGlow = document.getElementById('torchBeamGlow');
+    const torchToggleBtn = document.getElementById('torchToggleBtn');
+
+    let torchActive = true;
+    let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+    let isTorchHovering = false;
+
+    // Check reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) torchActive = false;
+
+    function updateTorchLoop() {
+      const lerp = 0.18;
+      currentX += (targetX - currentX) * lerp;
+      currentY += (targetY - currentY) * lerp;
+
+      torchContainer.style.setProperty('--mouse-x', currentX.toFixed(1) + 'px');
+      torchContainer.style.setProperty('--mouse-y', currentY.toFixed(1) + 'px');
+
+      requestAnimationFrame(updateTorchLoop);
+    }
+    requestAnimationFrame(updateTorchLoop);
+
+    function onPointerMoveTorch(e) {
+      if (!torchActive) return;
+      const rect = torchContainer.getBoundingClientRect();
+      targetX = e.clientX - rect.left;
+      targetY = e.clientY - rect.top;
+      if (!isTorchHovering) {
+        isTorchHovering = true;
+        torchRevealLayer.classList.remove('opacity-0');
+        torchRevealLayer.classList.add('opacity-100');
+        torchBeamGlow.classList.remove('opacity-0');
+        torchBeamGlow.classList.add('opacity-100');
+      }
+    }
+
+    torchContainer.addEventListener('pointermove', onPointerMoveTorch);
+    torchContainer.addEventListener('pointerenter', (e) => {
+      const rect = torchContainer.getBoundingClientRect();
+      targetX = currentX = e.clientX - rect.left;
+      targetY = currentY = e.clientY - rect.top;
+      onPointerMoveTorch(e);
+    });
+    torchContainer.addEventListener('pointerleave', () => {
+      isTorchHovering = false;
+      torchRevealLayer.classList.add('opacity-0');
+      torchRevealLayer.classList.remove('opacity-100');
+      torchBeamGlow.classList.add('opacity-0');
+      torchBeamGlow.classList.remove('opacity-100');
+    });
+
+    torchToggleBtn.addEventListener('click', () => {
+      torchActive = !torchActive;
+      if (!torchActive) {
+        torchToggleBtn.innerHTML = '<i data-lucide="eye-off" class="w-3 h-3 text-[#5E5A54]"></i><span class="hidden sm:inline">TORCH: OFF</span>';
+        torchRevealLayer.classList.add('opacity-0');
+        torchBeamGlow.classList.add('opacity-0');
+      } else {
+        torchToggleBtn.innerHTML = '<i data-lucide="eye" class="w-3 h-3 text-[#EAA728]"></i><span class="hidden sm:inline">TORCH: ON</span>';
+      }
+      lucide.createIcons();
+    });
+
+    // Touch support for torch
+    torchContainer.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        onPointerMoveTorch({ clientX: touch.clientX, clientY: touch.clientY });
+      }
+    }, { passive: true });
+
+    // ---------- SIGNATURE COLLABORATE STRING PHYSICS ----------
+    const collabStage = document.getElementById('collabStage');
+    const svgHandGroup = document.getElementById('svgHandGroup');
+    const strPath1 = document.getElementById('strPath1');
+    const strPath2 = document.getElementById('strPath2');
+    const strPath3 = document.getElementById('strPath3');
+    const strPath4 = document.getElementById('strPath4');
+
+    collabStage.addEventListener('pointermove', (e) => {
+      const rect = collabStage.getBoundingClientRect();
+      const xNorm = (e.clientX - rect.left) / rect.width - 0.5;
+      const yNorm = (e.clientY - rect.top) / rect.height - 0.5;
+
+      const ox = xNorm * 18;
+      const oy = yNorm * 14;
+
+      strPath1.setAttribute('d', `M 265,340 C ${350 + ox * 0.8},${320 + oy} ${480 + ox * 0.4},${250 + oy * 0.4} 540,210`);
+      strPath2.setAttribute('d', `M 285,355 C ${370 + ox},${340 + oy * 1.1} ${490 + ox * 0.5},${265 + oy * 0.5} 545,225`);
+      strPath3.setAttribute('d', `M 305,375 C ${390 + ox * 1.2},${360 + oy * 1.2} ${500 + ox * 0.6},${280 + oy * 0.6} 552,240`);
+      strPath4.setAttribute('d', `M 245,360 C ${330 + ox * 0.7},${350 + oy * 0.9} ${470 + ox * 0.3},${275 + oy * 0.3} 535,232`);
+    });
+
+    collabStage.addEventListener('pointerleave', () => {
+      strPath1.setAttribute('d', `M 265,340 C 350,320 480,250 540,210`);
+      strPath2.setAttribute('d', `M 285,355 C 370,340 490,265 545,225`);
+      strPath3.setAttribute('d', `M 305,375 C 390,360 500,280 552,240`);
+      strPath4.setAttribute('d', `M 245,360 C 330,350 470,275 535,232`);
+    });
+
+    // ---------- GSAP TIMELINES & SCROLL TRIGGERS ----------
+    if (typeof gsap !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero Entrance Timeline
+      const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      heroTl.from('.hero-stagger', { opacity: 0, y: -20, duration: 0.8, delay: 0.1 })
+            .from('#hero h1 span', { y: 50, opacity: 0, stagger: 0.15, duration: 1.0 }, '-=0.5')
+            .from('#heroPortraitCard', { opacity: 0, scale: 0.95, duration: 1.1 }, '-=0.8');
+
+      // Strings Entrance Drawing Animation
+      const strings = [strPath1, strPath2, strPath3, strPath4];
+      strings.forEach(str => {
+        const len = str.getTotalLength();
+        gsap.set(str, { strokeDasharray: len, strokeDashoffset: len });
+      });
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: '#collaborate',
+          start: 'top 70%',
+          toggleActions: 'play none none none'
+        }
+      })
+      .from(svgHandGroup, { y: 50, opacity: 0, rotation: -6, duration: 1.0, ease: 'back.out(1.5)' })
+      .to(strings, { strokeDashoffset: 0, duration: 1.2, stagger: 0.1, ease: 'power2.inOut' }, '-=0.7')
+      .from('#collabMainBtn', { scale: 0.85, opacity: 0, y: -15, duration: 0.8, ease: 'elastic.out(1, 0.4)' }, '-=0.6');
+
+      // Continuous subtle hand breathing pull
+      gsap.to(svgHandGroup, {
+        y: 6,
+        rotation: 1.2,
+        duration: 2.8,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+    }
+  </script>
 </body>
 </html>
